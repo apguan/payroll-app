@@ -2,7 +2,6 @@ pragma solidity ^0.4.24;
 
 import './Interface.sol';
 import './Ownable.sol';
-import './Interface.sol';
 
 // Safe maths
 // prevent data overflow
@@ -40,13 +39,15 @@ contract DappToken is ERC20Interface, Owned {
     using SafeMath for uint;
 
     string public symbol;
-    string public  name;
+    string public name;
     uint8 public decimals;
-    uint public bonusRate;
     uint totalSupply;
 
+    mapping(string => uint) bonusRates;
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
+
+    //map the token bonus rate to different currencies
 
     // Constructor, upon creation:
     // set the ticker symbol
@@ -54,13 +55,14 @@ contract DappToken is ERC20Interface, Owned {
     // set how many decimals the token can be divided by
     // set how many tokens are minted
     // **minted tokens are sent to the initial address that creates the token**
+    // **initial bonus currency set explicitly as 'ETH'**
     constructor(string _symbol, string _name, uint8 _decimals, uint _initialSupply, uint _bonusRate) public {
         symbol = _symbol;
         name = _name;
         decimals = _decimals;
         totalSupply = _initialSupply * 10**uint(decimals);
         balances[owner] = totalSupply;
-        bonusRate = _bonusRate;
+        bonusRate['ETH'] = _bonusRate;
         emit Transfer(address(0), owner, totalSupply);
     }
 
@@ -138,8 +140,8 @@ contract DappToken is ERC20Interface, Owned {
     }
 
     // Owner will be able to set bonusRate
-    function setBonusRate(uint _rate) public onlyOwner returns (uint) {
-        bonusRate = _rate;
-        return bonusRate;
+    function setBonusRate(string _currency, uint _rate) public onlyOwner returns (uint) {
+        bonusRates[_currency] = _rate;
+        return bonusRates;
     }
 }
