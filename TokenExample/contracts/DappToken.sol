@@ -43,11 +43,11 @@ contract DappToken is ERC20Interface, Owned {
     uint8 public decimals;
     uint totalSupply;
 
+    //map the token bonus rate to different currencies
     mapping(string => uint) bonusRates;
     mapping(address => uint) balances;
     mapping(address => mapping(address => uint)) allowed;
 
-    //map the token bonus rate to different currencies
 
     // Constructor, upon creation:
     // set the ticker symbol
