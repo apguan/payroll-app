@@ -62,7 +62,7 @@ contract DappToken is ERC20Interface, Owned {
         decimals = _decimals;
         totalSupply = _initialSupply * 10**uint(decimals);
         balances[owner] = totalSupply;
-        bonusRate['ETH'] = _bonusRate;
+        bonusRates['ETH'] = _bonusRate;
         emit Transfer(address(0), owner, totalSupply);
     }
 
@@ -142,6 +142,6 @@ contract DappToken is ERC20Interface, Owned {
     // Owner will be able to set bonusRate
     function setBonusRate(string _currency, uint _rate) public onlyOwner returns (uint) {
         bonusRates[_currency] = _rate;
-        return bonusRates;
+        return bonusRates[_currency];
     }
 }
