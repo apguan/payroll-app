@@ -79,10 +79,12 @@ contract DappToken is ERC20Interface, Owned {
     // Transfer the balance from token owner's account to `to` account
     // - Owner's account must have sufficient balance to transfer
     // - 0 value transfers are allowed
-    function transfer(address _to, uint _tokens) public returns (bool success) {
-        balances[msg.sender] = balances[msg.sender].sub(_tokens);
-        balances[_to] = balances[_to].add(_tokens);
-        emit Transfer(msg.sender, _to, _tokens);
+    function transfer(address _to, uint _tokens, string _paidWith) public returns (bool success) {
+        uint256 tokens = _tokens.mul(bonusRates[_paidWith]);
+
+        balances[msg.sender] = balances[msg.sender].sub(tokens);
+        balances[_to] = balances[_to].add(tokens);
+        emit Transfer(msg.sender, _to, tokens);
         return true;
     }
 
