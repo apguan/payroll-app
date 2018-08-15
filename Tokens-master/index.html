@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Token Example</title>
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <link rel="stylesheet" type="text/css" href="./index.css">
+    <script src="./node_modules/web3/dist/web3.min.js"></script>
+</head>
+<body>
+  <div class="parent-container">
+
+    <div>
+      <h3 id="total-supply"></h3>
+      <button class="ui button" id="get-total-supply">Get Total</button>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="ui action input">
+      <input id="purchase-token-input" type="text" placeholder="">
+      <button id="purchase-tokens" class="ui teal right labeled icon button">
+        <i class="cart icon"></i>
+        purchase
+      </button>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="get-balance">
+      <h3 id="balance-text"></h3>
+      <div class="ui action input">
+        <input id="balance-of-input" type="text" placeholder="Enter Address">
+        <button id="get-balance" class="ui red right labeled icon button">
+          Get Balance
+        </button>
+      </div>
+    </div>
+
+    <br/>
+    <br/>
+
+    <div class="transfer-balance">
+      <h3 class="completion-text"></h3>
+      <div class="ui action input">
+        <input id="transfer-address" type="text" placeholder="Recipient Address">
+        <input id="transfer-amount" type="text" placeholder="Transfer Amount">
+        <button id="transfer-balance" class="ui blue right labeled icon button">
+          Transfer
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+
+  <script
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+  <script src="semantic/dist/semantic.min.js"></script>
+  <script src="./bundle.js"></script>
+</body>
+</html>

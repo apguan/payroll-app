@@ -1,0 +1,6 @@
+.parent-container {
+  width: 40vw;
+  margin: 0 auto;
+  top: 50%;
+  transform: translateY(50%);
+}
