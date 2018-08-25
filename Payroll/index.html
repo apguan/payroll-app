@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>File(s) size</title>
+    <script src="./index.js"></script>
+  </head>
+  <body onload="updateSize();">
+    <h3>Ethereum Payroll</h3>
+    <p>
+      Upload a .csv file of your employees and payroll.
+    </p>
+    <p><input id="uploadInput" type="file" name="myFiles" onchange="updateSize();" multiple="multiple">
+      selected files:
+      <span id="fileNum">0</span>; total size:
+      <span id="fileSize">0</span></p>
+    <span id="fileDisplayArea"></span>
+    <button onclick="readFileType()">show text</button>
+  </body>
+</html>
