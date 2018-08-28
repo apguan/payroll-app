@@ -1,50 +1,55 @@
-//list how big the file is
-function updateSize() {
-  var nBytes = 0,
-      oFiles = document.getElementById("uploadInput").files,
-      nFiles = oFiles.length;
+// //import and parse the interface ABI from ./build/contracts
+// var fs = require("fs")
+// var interface = fs.readFileSync(__dirname + "/build/contracts/EIP20Interface.json");
+// var parsed= JSON.parse(interface);
+// var abi = parsed.abi;
 
-  for (var nFileId = 0; nFileId < nFiles; nFileId++) {
-    nBytes += oFiles[nFileId].size;
-  }
-
-  var sOutput = nBytes + " bytes";
-  // optional code for multiples approximation
-  for (var aMultiples = [
-    "KiB",
-    "MiB",
-    "GiB",
-    "TiB",
-    "PiB",
-    "EiB",
-    "ZiB",
-    "YiB"
-  ], nMultiple = 0, nApprox = nBytes / 1024; nApprox > 1; nApprox /= 1024, nMultiple++) {
-    sOutput = nApprox.toFixed(3) + " " + aMultiples[nMultiple] + " (" + nBytes + " bytes)";
-  }
-
-  // end of optional code
-  document.getElementById("fileNum").innerHTML = nFiles;
-  document.getElementById("fileSize").innerHTML = sOutput;
+if (typeof web3 !== "undefined") {
+  web3 = new Web3(web3.currentProvider);
+} else {
+  web3 = new Web3(new Web3.providers.HttpProvider("http://localhost:8545"));
 }
 
-//read at files
-function readFileType(){
-  var file = uploadInput.files[0];
-  var textType = /text.*/;
-  var csvType = 'application/vnd.ms-excel';
+web3.eth.defaultAccount = web3.eth.accounts[0];
 
-  if (file.type.match(textType) || file.type == csvType) {
+
+//read at files
+function readFile (){
+  var file = fileInput.files[0];
+  var textType = /text.*/;
+
+  if (file.type.match(textType)) {
     var reader = new FileReader();
-    
-    //read the file contents
+
     reader.onload = function(e) {
       var look = reader.result;
-      window.alert(look);
+      csvJSON(look);
     }
 
     reader.readAsText(file);
   } else {
     fileDisplayArea.innerText = "File not supported!";
   }
+}
+
+//var csv is the CSV file with headers
+function csvJSON(csv){
+  var lines=csv.split("\n");
+  var result = [];
+  var headers=lines[0].split(",");
+
+  for (var i = 1; i < lines.length; i++) {
+	  var obj = {};
+	  var currentline=lines[i].split(",");
+
+	  for (var j = 0; j < headers.length; j++) {
+		  obj[headers[j]] = currentline[j];
+	  }
+
+    result.push(obj);
+  }
+
+  //return result; //JavaScript object
+  console.log(JSON.stringify(result));
+  return JSON.stringify(result);
 }
