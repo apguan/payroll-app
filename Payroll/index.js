@@ -1,8 +1,8 @@
 // //import and parse the interface ABI from ./build/contracts
-// var fs = require("fs")
-// var interface = fs.readFileSync(__dirname + "/build/contracts/EIP20Interface.json");
-// var parsed= JSON.parse(interface);
-// var abi = parsed.abi;
+var fs = require("fs");
+var interface = fs.readFileSync(__dirname + "/build/contracts/Payroll.json", 'utf8');
+var parsed= JSON.parse(interface);
+var abi = parsed.abi;
 
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
@@ -12,9 +12,18 @@ if (typeof web3 !== "undefined") {
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
+var TokenContract = web3.eth.contract(abi).at("0x8a226f65f548bf85794c24e04dae341ad1e5c115");
+
+$(document).ready(function() {
+  //process the csv file
+  $('#process-csv').click(function() {
+    readFile();
+  })
+
+})
 
 //read at files
-function readFile (){
+function readFile(){
   var file = fileInput.files[0];
   var textType = /text.*/;
 

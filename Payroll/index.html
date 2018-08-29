@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <title>Ethereum Payroll</title>
     <script src="./node_modules/web3/dist/web3.min.js"></script>
-    <script src="./index.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   </head>
   <body>
     <h3>Ethereum Payroll</h3>
@@ -13,6 +13,7 @@
     </p>
     <p><input id="fileInput" type="file" name="myFiles" multiple="multiple">
       <span id="fileDisplayArea"></span>
-      <button onclick="readFile()">Process</button>
+      <button id="process-csv">Process</button>
     </body>
+    <script src="./bundle.js"></script>
   </html>
