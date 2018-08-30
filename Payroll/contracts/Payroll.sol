@@ -14,7 +14,8 @@ contract Payroll {
         _;
     }
 
-    function processPayment(address recipient, uint256 payment) public onlyOwner {
-        paymentReceipts[recipient] = payment;
+    function processPayment(address recipient) payable public onlyOwner {
+        recipient.transfer(msg.value);
+        paymentReceipts[recipient] = msg.value;
     }
 }

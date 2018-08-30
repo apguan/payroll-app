@@ -1,8 +1,13 @@
 // //import and parse the interface ABI from ./build/contracts
+var price = require('crypto-price');
+var Papa = require('papaparse');
 var fs = require("fs");
 var interface = fs.readFileSync(__dirname + "/build/contracts/Payroll.json", 'utf8');
 var parsed= JSON.parse(interface);
 var abi = parsed.abi;
+
+var currentEthConversionRate;
+getCurrentEthRate();
 
 if (typeof web3 !== "undefined") {
   web3 = new Web3(web3.currentProvider);
@@ -12,18 +17,18 @@ if (typeof web3 !== "undefined") {
 
 web3.eth.defaultAccount = web3.eth.accounts[0];
 
-var TokenContract = web3.eth.contract(abi).at("0x8a226f65f548bf85794c24e04dae341ad1e5c115");
+var PayrollContract = web3.eth.contract(abi).at("0x8a226f65f548bf85794c24e04dae341ad1e5c115");
 
 $(document).ready(function() {
   //process the csv file
   $('#process-csv').click(function() {
-    readFile();
+    processPayments();
   })
 
 })
 
 //read at files
-function readFile(){
+function processPayments() {
   var file = fileInput.files[0];
   var textType = /text.*/;
 
@@ -32,7 +37,20 @@ function readFile(){
 
     reader.onload = function(e) {
       var look = reader.result;
-      csvJSON(look);
+      var csvArray = Papa.parse(look, {header: true}).data;
+
+      csvArray.map(function(recipient) {
+        var userCoffers = web3.eth.accounts[0];
+        var amount = (parseFloat(currentEthConversionRate) * parseFloat(recipient.rate)).toString();
+        var recipientAddress = recipient.address;
+        console.log(userCoffers, amount, recipientAddress);
+
+        web3.eth.sendTransaction({
+          to: recipientAddress,
+          from: userCoffers,
+          value: web3.toWei(amount, "ether")
+        })
+      })
     }
 
     reader.readAsText(file);
@@ -41,24 +59,13 @@ function readFile(){
   }
 }
 
-//var csv is the CSV file with headers
-function csvJSON(csv){
-  var lines=csv.split("\n");
-  var result = [];
-  var headers=lines[0].split(",");
 
-  for (var i = 1; i < lines.length; i++) {
-	  var obj = {};
-	  var currentline=lines[i].split(",");
-
-	  for (var j = 0; j < headers.length; j++) {
-		  obj[headers[j]] = currentline[j];
-	  }
-
-    result.push(obj);
-  }
-
-  //return result; //JavaScript object
-  console.log(JSON.stringify(result));
-  return JSON.stringify(result);
+function getCurrentEthRate() {
+  price.getBasePrice('USD', 'ETH')
+  .then(obj => { // Base for ex - USD, Crypto for ex
+      currentEthConversionRate = obj.price;
+      console.log('The price of ether is: ', currentEthConversionRate);
+  }).catch(err => {
+      console.log(err);
+  });
 }
