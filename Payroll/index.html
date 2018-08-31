@@ -5,15 +5,19 @@
     <title>Ethereum Payroll</title>
     <script src="./node_modules/web3/dist/web3.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
   </head>
   <body>
-    <h3>Ethereum Payroll</h3>
-    <p>
-      Upload a .csv file of your employees and payroll.
-    </p>
-    <p><input id="fileInput" type="file" name="myFiles" multiple="multiple">
+    <div style="width: 30vw;margin: 10vh auto;">
+      <h3>Ethereum Payroll</h3>
+      <p>
+        Upload a .csv file of your employees and payroll.
+      </p>
+      <p><input class="btn btn-basic" id="fileInput" type="file" name="myFiles" multiple="multiple"></p>
       <span id="fileDisplayArea"></span>
-      <button id="process-csv">Process</button>
-    </body>
-    <script src="./bundle.js"></script>
-  </html>
+      <button class="btn btn-default" id="process-csv">Process</button>
+      <button class="btn btn-primary" id="download-csv">Download</button>
+    </div>
+  </body>
+  <script src="./bundle.js"></script>
+</html>
