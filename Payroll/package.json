@@ -11,7 +11,7 @@
     "browserify": "^16.2.2",
     "crypto-price": "0.0.6",
     "papaparse": "^4.6.0",
-    "truffle": "4.1.5",
+    "truffle": "4.1.17",
     "truffle-hdwallet-provider": "0.0.3"
   },
   "scripts": {
